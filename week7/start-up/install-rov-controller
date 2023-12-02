@@ -2,6 +2,7 @@
 
 echo "Installation script for ROV Controller"
 
+
 echo "Make directories ..."
 mkdir /home/xacademy/bin /home/xacademy/log /home/xacademy/rov-controller
 
@@ -11,6 +12,9 @@ chmod 755 /home/xacademy/bin/*
 
 echo "Copy ROV Controller Python scripts to their directories ..."
 cp ../rov-controller.py /home/xacademy/rov-controller
+
+echo "Install timestamp utility ..."
+sudo apt-get install moreutils
 
 echo "Create systemd services ..."
 sudo cp rov-controller.service /etc/systemd/system/
