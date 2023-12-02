@@ -1,0 +1,3 @@
+#!/bin/bash
+
+export ROV_CONTROLLER_EXAMPLE="ROV Controller Example"

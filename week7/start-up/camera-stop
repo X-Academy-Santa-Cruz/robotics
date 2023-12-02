@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+PID_FILE=/home/xacademy/.camera.pid
+if [[ -f "$PID_FILE" ]]; then
+   kill -9 `cat /home/xacademy/.camera.pid`
+   rm -f /home/xacademy/.camera.pid
+else
+ # Kill the script by finding pid using ps
+ PID=`ps -ef | grep "/home/xacademy/camera/camera.py" | grep -v "grep"|  awk '{print $2}'`
+ # shellcheck disable=SC1072
+ if [ ! -z "${PID}" ]; then
+   kill -9 "${PID}"
+ fi
+fi

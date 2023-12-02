@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+PID_FILE=/home/xacademy/.rov-controller.pid
+if [[ -f "$PID_FILE" ]]; then
+   kill -9 `cat /home/xacademy/.rov-controller.pid`
+   rm -f /home/xacademy/.rov-controller.pid
+else
+ # Kill the script by finding pid using ps
+ PID=`ps -ef | grep "/home/xacademy/rov-controller/rov-controller.py" | grep -v "grep"|  awk '{print $2}'`
+ # shellcheck disable=SC1072
+ if [ ! -z "${PID}" ]; then
+   kill -9 "${PID}"
+ fi
+fi

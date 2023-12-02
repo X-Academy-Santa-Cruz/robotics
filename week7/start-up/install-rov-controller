@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "Installation script for ROV Controller"
+
+echo "Make directories ..."
+mkdir /home/xacademy/bin /home/xacademy/log /home/xacademy/rov-controller
+
+echo "Copy ROV Controller to ~/bin ..."
+cp rov-controller-* /home/xacademy/bin
+chmod 755 /home/xacademy/bin/*
+
+echo "Copy ROV Controller Python scripts to their directories ..."
+cp ../rov-controller.py /home/xacademy/rov-controller
+
+echo "Create systemd services ..."
+sudo cp rov-controller.service /etc/systemd/system/
+sudo chmod 644 /etc/systemd/system/rov-controller.service
+sudo systemctl enable rov-controller
+sudo systemctl start rov-controller
+sudo systemctl status rov-controller
+
+echo "Add ~/bin to path ..."
+cat << EOF >> /home/xacademy/.bashrc
+# set PATH so it includes private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+   PATH="$HOME/bin:$PATH"
+fi
+
+EOF
+

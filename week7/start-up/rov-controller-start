@@ -1,0 +1,28 @@
+#!/bin/bash
+
+LOGFILE=/home/xacademy/log/rov-controller.log
+
+
+# Set ROV Controller Configuration Environment Variables
+source /home/xacademy/bin/rov-controller-config
+
+
+# Stop ROV Controller
+/home/xacademy/bin/rov-controller-stop
+
+
+nohup python3 /home/xacademy/rov-controller/rov-controller.py < /dev/null 2>&1 | ts '[%Y-%m-%d %H:%M:%.S]' >> "${LOGFILE}" &
+echo $! > /home/xacademy/.rov-controller-tmppid
+
+
+rm /home/xacademy/log/rov-controller-latest
+ln -s "${LOGFILE}" /home/xacademy/log/rov-controller-latest
+
+
+TMPPID=$(cat /home/xacademy/.rov-controller-tmppid)
+rm /home/xacademy/.rov-controller-tmppid
+CORRECT_PID=$(( "${TMPPID}" - 1))
+echo "${CORRECT_PID}" > /home/xacademy/.rov-controller.pid
+sleep 1
+/home/xacademy/bin/rov-controller-status
+

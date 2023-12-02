@@ -1,0 +1,21 @@
+[Unit]
+Description=ROV Controller
+After=multi-user.target
+
+
+[Service]
+User=xacademy
+Type=forking
+ExecStart=/home/xacademy/bin/rov-controller-start
+ExecStop=/home/xacademy/bin/rov-controller-stop
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+After=network-online.target
+Wants=network-online.target
+
+
+[Install]
+WantedBy=multi-user.target

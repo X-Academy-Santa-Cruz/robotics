@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "Installation script for Camera"
+
+echo "Make directories ..."
+mkdir ~/bin ~/log ~/camera
+
+echo "Copy Camera scripts to ~/bin ..."
+cp camera-* ~/bin
+chmod 755 ~/bin/*
+
+echo "Copy Camera Python scripts to their directories ..."
+cp ../camera.py ~/camera
+
+echo "Create systemd services ..."
+sudo cp camera.service /etc/systemd/system/
+sudo chmod 644 /etc/systemd/system/camera.service
+sudo systemctl enable camera
+sudo systemctl start camera
+sudo systemctl status camera

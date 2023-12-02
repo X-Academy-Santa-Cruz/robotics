@@ -1,0 +1,21 @@
+[Unit]
+Description=Camera Streaming
+After=multi-user.target
+
+
+[Service]
+User=xacademy
+Type=forking
+ExecStart=/home/xacademy/bin/camera-start
+ExecStop=/home/xacademy/bin/camera-stop
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+After=network-online.target
+Wants=network-online.target
+
+
+[Install]
+WantedBy=multi-user.target

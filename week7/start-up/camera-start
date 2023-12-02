@@ -1,0 +1,28 @@
+#!/bin/bash
+
+LOGFILE=/home/xacademy/log/camera.log
+
+
+# Set Camera Configuration Environment Variables
+source /home/xacademy/bin/camera-config
+
+
+# Stop Camera
+/home/xacademy/bin/camera-stop
+
+
+nohup python3 /home/xacademy/camera/camera.py < /dev/null 2>&1 | ts '[%Y-%m-%d %H:%M:%.S]' >> "${LOGFILE}" &
+echo $! > /home/xacademy/.camera-tmppid
+
+
+rm /home/xacademy/log/camera-latest
+ln -s "${LOGFILE}" /home/xacademy/log/camera-latest
+
+
+TMPPID=$(cat /home/xacademy/.camera-tmppid)
+rm /home/xacademy/.camera-tmppid
+CORRECT_PID=$(( "${TMPPID}" - 1))
+echo "${CORRECT_PID}" > /home/xacademy/.camera.pid
+sleep 1
+/home/xacademy/bin/camera-status
+
