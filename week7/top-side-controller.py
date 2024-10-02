@@ -78,7 +78,7 @@ while True:
         wheel_velocity_right = (mt * velocity_translation - mr * velocity_rotation) / (mt + mr)
         wheel_velocity_left = (mt * velocity_translation + mr * velocity_rotation) / (mt + mr)
 
-    wheel_scaled_right = clamp(90.0 - (wheel_velocity_right * 54.0 + 45.0), 0.0, 90.0)
+    wheel_scaled_right = clamp(wheel_velocity_right * 54.0 + 45.0, 0.0, 90.0)
     wheel_scaled_left = clamp(wheel_velocity_left * 54.0 + 45.0, 0.0, 90.0)
 
     print(
