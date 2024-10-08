@@ -11,6 +11,7 @@ from threading import Condition
 from picamera2 import Picamera2
 from picamera2.encoders import MJPEGEncoder
 from picamera2.outputs import FileOutput
+from libcamera import controls 
 
 PAGE = """\
 <html>
@@ -19,7 +20,7 @@ PAGE = """\
 </head>
 <body>
 <h1>Picamera2 MJPEG Streaming Demo</h1>
-<img src="stream.mjpg" width="640" height="480" />
+<img src="stream.mjpg" width="1920" height="1080" />
 </body>
 </html>
 """
@@ -82,9 +83,12 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 
 picam2 = Picamera2()
-picam2.configure(picam2.create_video_configuration(main={"size": (640, 480)}))
+picam2.configure(picam2.create_video_configuration(main={"size": (1920, 1080)}))
 output = StreamingOutput()
 picam2.start_recording(MJPEGEncoder(), FileOutput(output))
+picam2.set_controls({"AfMode":controls.AfModeEnum.Continuous, 
+"AfSpeed":controls.AfFastEnum.Fast})
+
 
 try:
     address = ('', 8000)
