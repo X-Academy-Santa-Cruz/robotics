@@ -86,8 +86,8 @@ picam2 = Picamera2()
 picam2.configure(picam2.create_video_configuration(main={"size": (1920, 1080)}))
 output = StreamingOutput()
 picam2.start_recording(MJPEGEncoder(), FileOutput(output))
-picam2.set_controls({"AfMode":controls.AfModeEnum.Continuous, 
-"AfSpeed":controls.AfFastEnum.Fast})
+#picam2.set_controls({"AfMode":controls.AfModeEnum.Continuous, 
+#"AfSpeed":controls.AfFastEnum.Fast})
 
 
 try:
