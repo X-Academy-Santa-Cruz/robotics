@@ -19,7 +19,7 @@ def zero_box(n):
     return n
 
 
-ip = "127.0.0.1"  # ROV IP!!!
+ip = "10.42.0.1"  # ROV IP!!!
 server_address_port = (ip, 20001)
 
 bufferSize = 128
