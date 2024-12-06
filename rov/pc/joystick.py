@@ -1,7 +1,6 @@
 from math import atan2, degrees, pi, sin, sqrt
 from time import sleep, time
 
-# import pi_servo_hat
 import pygame
 import socket
 import pickle
@@ -35,9 +34,6 @@ pygame.display.init()
 pygame.joystick.init()
 controller = pygame.joystick.Joystick(0)
 controller.init()
-
-# servo_hat = pi_servo_hat.PiServoHat()
-# servo_hat.restart()
 
 time_0 = time()
 time_1 = time()
@@ -87,9 +83,6 @@ while True:
             time(), jx, jy, degrees(theta), velocity_translation, velocity_rotation, wheel_velocity_right,
             wheel_velocity_left, wheel_scaled_right, wheel_scaled_left))
 
-    # servo_hat.move_servo_position(0, wheel_scaled_left)
-    # servo_hat.move_servo_position(1, wheel_scaled_right)
-
     send_message = pickle.dumps([wheel_scaled_left, wheel_scaled_right, 0, 0,
                                  0, 0, 0, 0,
                                  0, 0, 0, 0,
@@ -97,7 +90,7 @@ while True:
 
     try:
         udp_client_socket.sendto(send_message, server_address_port)
-    except :
+    except:
         print("Connection Lost, reconnecting...")
         UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 
