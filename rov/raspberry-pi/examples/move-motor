@@ -1,0 +1,57 @@
+#!/bin/python3
+
+import argparse
+import time
+
+import pi_servo_hat
+
+
+# Read in the arguments to the program from the command line.
+# Run the program using:
+# python3 move-motor.py <motor> <speed>
+# 
+parser = argparse.ArgumentParser()
+parser.add_argument("motor", help="The number of the motor on the Pi Servo Hat.")
+parser.add_argument("speed", help="Speed of motor from -100% to 100%")
+args = parser.parse_args()
+# Convert the motor argument to an integer
+motor = int(args.motor)
+# Convert the speed argument to a float
+speed = float(args.speed)
+
+servo_hat = pi_servo_hat.PiServoHat()
+servo_hat.restart()
+FREQUENCY = 20.0 # How many times per second to  update the motor speed
+interval = 1.0/FREQUENCY
+
+# Run a loop in a try/expect to catch the keyboard interupt (Control-C)
+# to stop the motor when exiting the program.
+try:
+    
+    count = 0
+    # Run the loop forever (or when control-C is pressed.
+    while True:
+        # Scale the motor speed to range between 0 and 90.
+        # ------------------------------------------------
+        # The Pi Servo Hat python module is design to move a servo
+        # to a specified angle in degrees. The Servo Hat then sends out a
+        # Pulese Width Modulation (PWM) to the servo or in this case,
+        # the motor controller. Motor controllers will then map the speed
+        # of the motor from -100% to 100% of the speed by controller the
+        # voltage. In the case of the DC bigle pump motors, the voltage
+        # will go from -12V to +12V.
+        #
+        scaled_speed = (speed + 100.0)/200.0 * 90
+
+        # Set the speed of the motor using scaled value.
+        servo_hat.move_servo_position(motor, scaled_speed)
+        print(count, motor, speed, scaled_speed)
+        count += 1
+
+        # Sleep for small amount of time to just update the motor
+        # FREQUENCY times per second.
+        time.sleep(interval)
+
+except KeyboardInterrupt:
+    print("Stopping motors")
+    servo_hat.restart()
