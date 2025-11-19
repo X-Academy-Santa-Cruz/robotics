@@ -2,3 +2,6 @@ pi_servo_hat
 picamera2
 pickle
 pygame
+sparkfun-qwiic
+sparkfun-qwiic-pca9685
+
