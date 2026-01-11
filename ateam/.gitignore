@@ -1,0 +1,5 @@
+/.vscodevimrc
+/xacademy.code-workspace
+**/faster-rcnn-torch/
+.venv/
+__pycache__/
