@@ -75,8 +75,11 @@ def maybe_invert_us(motor: int, us: int) -> int:
 # =========================
 
 def run_step(pca: PCA9685, motor: int, label: str, us: int, seconds: float):
+    # Get the channel number for the print statement
+    channel = MOTOR_TO_CHANNEL[motor]
     us = maybe_invert_us(motor, us)
-    print(f"Motor {motor}: {label} @ {us}us")
+    # Updated print statement
+    print(f"Motor {motor} (Channel {channel}): {label} @ {us}us")
     set_motor_us(pca, motor, us)
     time.sleep(seconds)
 
@@ -90,7 +93,7 @@ def main():
         stop_all(pca)
         time.sleep(ARM_SECONDS)
 
-        for motor in range(1, 7):
+        for motor in range(1, 9):
             print("\n==============================")
             print(f"Testing motor {motor} (channel {MOTOR_TO_CHANNEL[motor]})")
             print("==============================")
