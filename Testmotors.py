@@ -9,8 +9,8 @@ from adafruit_pca9685 import PCA9685
 
 # Motor number -> PCA9685 channel
 MOTOR_TO_CHANNEL = {
-    1: 7,
-    2: 8,
+    1: 1,
+    2: 2,
     3: 3,
     4: 4,
     5: 5,
